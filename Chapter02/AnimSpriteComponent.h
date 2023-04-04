@@ -9,6 +9,11 @@
 #pragma once
 #include "SpriteComponent.h"
 #include <vector>
+
+struct AnimIndex {int start; int end;};
+const AnimIndex kShipAnimeIndex{0, 3};
+const AnimIndex kHumanAnimeIndex{4, 21};
+
 class AnimSpriteComponent : public SpriteComponent
 {
 public:
@@ -27,4 +32,7 @@ private:
 	float mCurrFrame;
 	// Animation frame rate
 	float mAnimFPS;
+
+	AnimIndex mAnimIndex;
+	bool mAnimIsLoop;
 };

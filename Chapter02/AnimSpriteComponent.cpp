@@ -13,6 +13,8 @@ AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder)
 	:SpriteComponent(owner, drawOrder)
 	, mCurrFrame(0.0f)
 	, mAnimFPS(24.0f)
+	, mAnimIndex(kHumanAnimeIndex)
+	, mAnimIsLoop(false)
 {
 }
 
@@ -27,13 +29,18 @@ void AnimSpriteComponent::Update(float deltaTime)
 		mCurrFrame += mAnimFPS * deltaTime;
 		
 		// Wrap current frame if needed
-		while (mCurrFrame >= mAnimTextures.size())
-		{
-			mCurrFrame -= mAnimTextures.size();
+		if (mCurrFrame + mAnimIndex.start >= mAnimIndex.end) {
+			if (mAnimIsLoop) {
+				while (mCurrFrame + mAnimIndex.start >= mAnimIndex.end) {
+					mCurrFrame -= (mAnimIndex.end - mAnimIndex.start + 1);
+				}
+			} else {
+				mCurrFrame = mAnimIndex.end - mAnimIndex.start;
+			}
 		}
 
 		// Set the current texture
-		SetTexture(mAnimTextures[static_cast<int>(mCurrFrame)]);
+		SetTexture(mAnimTextures[static_cast<int>(mCurrFrame) + mAnimIndex.start]);
 	}
 }
 

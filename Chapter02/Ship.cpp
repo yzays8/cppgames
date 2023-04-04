@@ -23,6 +23,12 @@ Ship::Ship(Game* game)
 		game->GetTexture("Assets/Ship03.png"),
 		game->GetTexture("Assets/Ship04.png"),
 	};
+	for (int i = 1; i <= 9; ++i) {
+		anims.push_back(game->GetTexture("Assets/Character0" + std::to_string(i) + ".png"));
+	}
+	for (int i = 10; i <= 18; ++i) {
+		anims.push_back(game->GetTexture("Assets/Character" + std::to_string(i) + ".png"));
+	}
 	asc->SetAnimTextures(anims);
 }
 
